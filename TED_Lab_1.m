@@ -78,11 +78,11 @@ T(1:5,:)
 
 % ----- 6. Расчет интервальной оценки центра распределения при неизвестной дисперсии -----
 
-S_temp=1/length(temp)*sqrt(std(temp));
-S_rain=1/length(rain)*sqrt(std(rain));
+S_temp=std(temp);
+S_rain=std(rain);
 mean_temp=mean(temp);
 mean_rain=mean(rain);
-t_tab=abs(mean_temp-mean_rain)/sqrt((S_temp^2/length(temp))*(S_rain^2/length(rain)));
+t_tab=abs(mean_temp-mean_rain)/sqrt((S_temp^2/length(temp))+(S_rain^2/length(rain)));
 
 disp('____________________________________________________')
 disp('Kol-vo elementov v massive:')
@@ -90,13 +90,7 @@ disp(length(temp))
 disp('Tablichniy koef. Studenta pri alpha=0,95:')
 disp(t_tab)
 
-v_temp_min=min(temp);
-v_temp_max=max(temp);
-
-v_rain_min=min(rain);
-v_rain_max=max(rain);
-
 disp('____________________________________________________')
-fprintf('Doveritelniy interval dlya temperatyri:%4.2d -%4.2d\n',v_temp_min,v_temp_max)
-fprintf('Doveritelniy interval dlya osadkov:%4.2d -%4.2d\n',v_rain_min,v_rain_max)
+fprintf('Doveritelniy interval dlya temperatyri:%4.2d -%4.2d\n',mean_temp,2*S_temp)
+fprintf('Doveritelniy interval dlya osadkov:%4.2d -%4.2d\n',mean_rain,2*S_rain)
 disp('____________________________________________________')
